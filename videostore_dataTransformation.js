@@ -85,3 +85,18 @@ function processOrder(customer, movies) {
 }
 
 productionCode();
+
+
+///####################
+///Tests
+// function assert(expected, actual){
+//     if (expected !== actual) {
+//         console.log(`Fail! Expected: ${expected}, Actual: ${actual}` );
+//     }
+// }
+//
+// function contains(string, substring){
+//     return string.indexOf(substring) !== -1;
+// }
+//
+//assert(productionCode(), true);
