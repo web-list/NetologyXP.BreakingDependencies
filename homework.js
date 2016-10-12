@@ -60,7 +60,9 @@ var additionalTaxes =
         "Arkansas": 0.015,
         "California": "",
         "Colorado": "",
-        "Connecticut": ""
+        "Connecticut": "",
+        "Tennessee": 0.05,
+        "Texas": "",
     },
     "PrescriptionDrug": {
         "Alabama": "",
@@ -69,8 +71,10 @@ var additionalTaxes =
         "Arkansas": "",
         "California": "",
         "Colorado": "",
-        "Connecticut": ""
-    }
+        "Connecticut": "",
+        "Tennessee": 0,
+        "Texas": "",
+    },
 };
 
 var baseTaxes = {
@@ -80,7 +84,9 @@ var baseTaxes = {
     "Arkansas" : 0.065,
     "California" : 0.075,
     "Colorado" : 0.029,
-    "Connecticut" : 0.0635
+    "Connecticut" : 0.0635,
+    "Tennessee" : 0.07,
+    "Texas": 0.0625,
 };
 
 function additional(state, type) {
@@ -132,6 +138,12 @@ var tests = [
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("Alaska", "amoxicillin")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("California", "amoxicillin")),
     () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger")),
+    () => assertEquals(5.5 * (1 + 0.07 + 0.05), calculatePriceFor("Tennessee", "milk")),
+    () => assertEquals(1.4 * (1 + 0.07), calculatePriceFor("Tennessee", "marijuana")),
+    () => assertEquals(2 * (1 + 0.07), calculatePriceFor("Tennessee", "hamburger")),
+    () => assertEquals(5.5 * (1 + 0), calculatePriceFor("Texas", "milk")),
+    () => assertEquals(1.4 * (1 + 0), calculatePriceFor("Texas", "marijuana")),
+    () => assertEquals(2 * (1 + 0.0625), calculatePriceFor("Texas", "hamburger")),
 ];
 //Раскомментируйте следующую строчку для запуска тестов:
 runTests (tests);
