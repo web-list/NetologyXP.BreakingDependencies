@@ -47,27 +47,39 @@ var items = {
     "ceasar salad": {price: 4.2, type: "PreparedFood"},
 };
 
+var categoriesWithoutAdditionalTax = [
+    "PreparedFood",
+];
+
 var itemTypes =
-    {
-        "Groceries": {
-            "Alabama" : 0,
-            "Alaska" : 0,
-            "Arizona" : "",
-            "Arkansas" : 0.015,
-            "California" : "",
-            "Colorado" : "",
-            "Connecticut" : ""
-        },
-        "PrescriptionDrug": {
-            "Alabama" : "",
-            "Alaska" : 0,
-            "Arizona" : "",
-            "Arkansas" : "",
-            "California" : "",
-            "Colorado" : "",
-            "Connecticut" : ""
-        }
-    };
+{
+    "Groceries": {
+        "Alabama": 0,
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": 0.015,
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    },
+    "PrescriptionDrug": {
+        "Alabama": "",
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": "",
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    }
+};
+
+function additional(state, type) {
+    var value = 0;
+    if (categoriesWithoutAdditionalTax.indexOf(type) == -1) {
+        value = itemTypes[type][state];
+    }
+    return value;
+}
 
 function base(state) {
     var taxes = {
@@ -82,24 +94,13 @@ function base(state) {
     return taxes[state];
 }
 
-function calc(state, itemType) {
-
-    var itemTypeTaxModifier = itemTypes[itemType];
-    if (itemTypeTaxModifier[state] === "") {
-        return 0;
-    }
-    return base(state) + itemTypeTaxModifier[state];
+function tax(state, type) {
+    var additionalTax = additional(state, type);
+    return (additionalTax === "") ? 0 : base(state) + additionalTax;
 }
 
 function calculatePriceFor(state, item) {
-    var result = null;
-    if (items[item].type === "PreparedFood") {
-        result = ( 1 + base(state) ) * items[item].price;
-    }
-    else {
-        result = calc(state, items[item].type) * items[item].price + items[item].price;
-    }
-    return result;
+    return (1 + tax(state, items[item].type)) * items[item].price;
 }
 
 class TaxCalculator {
