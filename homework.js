@@ -96,6 +96,20 @@ var stateTaxes = {
             "Groceries": "",
             "PrescriptionDrug": "",
         },
+    },
+    "Tennessee": {
+        base: 0.07,
+        additional: {
+            "Groceries": 0.05,
+            "PrescriptionDrug": 0,
+        },
+    },
+    "Texas": {
+        base: 0.0625,
+        additional: {
+            "Groceries": "",
+            "PrescriptionDrug": "",
+        },
     }
 };
 
@@ -154,6 +168,12 @@ var tests = [
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("Alaska", "amoxicillin")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("California", "amoxicillin")),
     () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger")),
+    () => assertEquals(5.5 * (1 + 0.07 + 0.05), calculatePriceFor("Tennessee", "milk")),
+    () => assertEquals(1.4 * (1 + 0.07), calculatePriceFor("Tennessee", "marijuana")),
+    () => assertEquals(2 * (1 + 0.07), calculatePriceFor("Tennessee", "hamburger")),
+    () => assertEquals(5.5 * (1 + 0), calculatePriceFor("Texas", "milk")),
+    () => assertEquals(1.4 * (1 + 0), calculatePriceFor("Texas", "marijuana")),
+    () => assertEquals(2 * (1 + 0.0625), calculatePriceFor("Texas", "hamburger")),
 ];
 //Раскомментируйте следующую строчку для запуска тестов:
 runTests (tests);
