@@ -83,7 +83,33 @@ var baseTaxes = {
     "Connecticut" : 0.0635
 };
 
+var stateTaxes = {
+    "Alabama": {
+        base: 0.04,
+        additional: {
+            "Groceries": 0,
+            "PrescriptionDrug": "",
+            "PreparedFood": "",
+        }
+    },
+    "Alaska": {
+        base: 0,
+        additional: {
+            "Groceries": 0,
+            "PrescriptionDrug": 0,
+            "PreparedFood": "",
+        }
+    }
+};
+
 function additional(state, type) {
+
+    if (stateTaxes[state] != undefined) {
+        if (stateTaxes[state].additional[type] != undefined) {
+            return stateTaxes[state].additional[type];
+        }
+    }
+
     var value = 0;
     if (categoriesWithoutAdditionalTax.indexOf(type) == -1) {
         value = additionalTaxes[type][state];
@@ -92,6 +118,11 @@ function additional(state, type) {
 }
 
 function base(state) {
+
+    if (stateTaxes[state] != undefined) {
+        return stateTaxes[state].base;
+    }
+
     return baseTaxes[state];
 }
 
