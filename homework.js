@@ -47,83 +47,74 @@ var items = {
     "ceasar salad": {price: 4.2, type: "PreparedFood"},
 };
 
-var categoriesWithoutAdditionalTax = [
-    "PreparedFood",
-];
-
-var additionalTaxes =
-{
-    "Groceries": {
-        "Alabama": 0,
-        "Alaska": 0,
-        "Arizona": "",
-        "Arkansas": 0.015,
-        "California": "",
-        "Colorado": "",
-        "Connecticut": ""
-    },
-    "PrescriptionDrug": {
-        "Alabama": "",
-        "Alaska": 0,
-        "Arizona": "",
-        "Arkansas": "",
-        "California": "",
-        "Colorado": "",
-        "Connecticut": ""
-    }
-};
-
-var baseTaxes = {
-    "Alabama" : 0.04,
-    "Alaska" : 0,
-    "Arizona" : 0.056,
-    "Arkansas" : 0.065,
-    "California" : 0.075,
-    "Colorado" : 0.029,
-    "Connecticut" : 0.0635
-};
-
 var stateTaxes = {
     "Alabama": {
         base: 0.04,
         additional: {
             "Groceries": 0,
             "PrescriptionDrug": "",
-            "PreparedFood": "",
-        }
+        },
     },
     "Alaska": {
         base: 0,
         additional: {
             "Groceries": 0,
             "PrescriptionDrug": 0,
-            "PreparedFood": "",
-        }
+        },
+    },
+    "Arizona": {
+        base: 0.056,
+        additional: {
+            "Groceries": "",
+            "PrescriptionDrug": "",
+        },
+    },
+    "Arkansas": {
+        base: 0.065,
+        additional: {
+            "Groceries": 0.015,
+            "PrescriptionDrug": "",
+        },
+    },
+    "California": {
+        base: 0.075,
+        additional: {
+            "Groceries": "",
+            "PrescriptionDrug": "",
+        },
+    },
+    "Colorado": {
+        base: 0.029,
+        additional: {
+            "Groceries": "",
+            "PrescriptionDrug": "",
+        },
+    },
+    "Connecticut": {
+        base: 0.0635,
+        additional: {
+            "Groceries": "",
+            "PrescriptionDrug": "",
+        },
     }
 };
 
 function additional(state, type) {
-
+    var value = 0;
     if (stateTaxes[state] != undefined) {
         if (stateTaxes[state].additional[type] != undefined) {
-            return stateTaxes[state].additional[type];
+            value = stateTaxes[state].additional[type];
         }
-    }
-
-    var value = 0;
-    if (categoriesWithoutAdditionalTax.indexOf(type) == -1) {
-        value = additionalTaxes[type][state];
     }
     return value;
 }
 
 function base(state) {
-
+    var value = 0;
     if (stateTaxes[state] != undefined) {
-        return stateTaxes[state].base;
+        value = stateTaxes[state].base;
     }
-
-    return baseTaxes[state];
+    return value;
 }
 
 function tax(state, type) {
